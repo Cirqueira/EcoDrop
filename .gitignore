@@ -1,0 +1,6 @@
+# Ignorar todos os arquivos .html
+*.html
+
+# Ignorar a pasta chamada backup e todo o seu conteúdo
+src\receptor_atuador\backup
+src\transmissor_sensor\backup

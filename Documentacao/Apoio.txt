@@ -1,0 +1,79 @@
+# 🌿 UmiTech
+
+O **UmiTech** é um ecossistema IoT desenvolvido para o monitoramento inteligente e a automação da irrigação de solos. Utilizando o poder do **ESP32**, o sistema coleta dados ambientais em tempo real, permite a visualização remota via Web e atua automaticamente para garantir que suas plantas nunca fiquem com sede.
+
+---
+
+## 🚀 Funcionalidades
+
+*   **Monitoramento Dual:** Coleta constante de umidade do ar e umidade do solo.
+*   **Interface Local:** Exibição imediata dos dados em um display OLED de 0.96".
+*   **Dashboard Web Real-time:** Servidor web local que gera um IP para acesso via navegador (PC ou Smartphone) na mesma rede Wi-Fi.
+*   **Irrigação Automática:** Ativação de uma bomba d'água com sistema de aspersores sempre que o solo for detectado como "seco".
+*   **Alertas Visuais:** Notificações no sistema quando a umidade atinge níveis críticos.
+
+---
+
+## 🛠️ Hardware Necessário
+
+| Componente | Função |
+| :--- | :--- |
+| **ESP32** | Cérebro do projeto com conexão Wi-Fi. |
+| **Sensor de Umidade de Solo** | Mede o nível de hidratação da terra. |
+| **Sensor de Umidade do Ar** | Monitora o ambiente (Ex: DHT11/DHT22). |
+| **Display OLED 0.96" (I2C)** | Interface visual local. |
+| **Mini Bomba d'Água** | Responsável pela irrigação. |
+| **Módulo Relé / Transistor** | Para acionamento da bomba via ESP32. |
+| **Protoboard & Jumpers** | Conexões e prototipagem. |
+| **Tubos e Aspersores** | Distribuição da água. |
+
+---
+
+## 💻 Tecnologias Utilizadas
+
+*   **Linguagem:** C++ (Arduino Framework)
+*   **Protocolo:** HTTP (Web Server Local)
+*   **Bibliotecas sugeridas:**
+    *   `WiFi.h` (Conexão de rede)
+    *   `Adafruit_SSD1306` (Controle do Display OLED)
+    *   `DHT sensor library` (Leitura de umidade do ar)
+
+---
+
+## 🔧 Como Configurar
+
+1.  **Clone o repositório:**
+    ```bash
+    git clone https://github.com/seu-usuario/UmiTech.git
+    ```
+2.  **Conecte o Hardware:** Siga o esquema de montagem (certifique-se de que a bomba tenha uma fonte externa de energia se necessário).
+3.  **Configure o Wi-Fi:** No código-fonte, altere as variáveis `ssid` e `password` para os dados da sua rede.
+4.  **Upload:** Use a Arduino IDE ou PlatformIO para carregar o código no seu ESP32.
+5.  **Acesse o Dashboard:**
+    *   Abra o Monitor Serial.
+    *   Copie o endereço IP gerado (Ex: `192.168.1.15`).
+    *   Cole no navegador do seu celular ou PC.
+
+---
+
+## 🌊 Funcionamento do Sistema
+
+O UmiTech opera em um loop inteligente:
+1.  **Leitura:** Os sensores verificam o estado do solo e do ar.
+2.  **Exibição:** O IP local e os dados aparecem no **Display OLED**.
+3.  **Decisão:** Se a umidade do solo estiver abaixo do limite definido, o ESP32 ativa o Relé, ligando a **bomba d'água** e os **aspersores**.
+4.  **Atualização:** O dashboard web é atualizado instantaneamente para visualização remota.
+
+---
+
+## 📝 Licença
+
+Este projeto está sob a licença MIT. Sinta-se livre para usar, modificar e distribuir.
+
+---
+*Desenvolvido com ❤️ por [Seu Nome ou Nome do Grupo]*
+
+---
+
+### Dica de ouro para o seu GitHub:
+Se você tiver fotos do projeto montado ou um print da tela do celular acessando o dashboard, não esqueça de criar uma pasta chamada `/img` no seu repositório e adicionar as imagens no README usando o código `![Nome da Imagem](link-da-imagem.jpg)`. Isso dá um toque profissional incrível! 😉
