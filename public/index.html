@@ -1,0 +1,1883 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🌿 EcoDrop 🌿</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+
+    /* ============================================================
+       TEMAS / SKINS
+       ============================================================ */
+    :root,
+    body[data-theme="default"] {
+      --bg: #f1f8e9;
+      --bg-subtle: #e8f3dc;
+      --text: #33691e;
+      --title: #2e7d32;
+      --muted: #7cb342;
+      --card-bg: #ffffff;
+      --card-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+      --border: #dcedc8;
+      --table-head: #c5e1a5;
+      --table-alt: #f9fbe7;
+      --success: #1b5e20;
+      --danger: #b71c1c;
+      --accent: #2e7d32;
+      --accent-contrast: #ffffff;
+      --accent-soft: #e8f5e9;
+      --accent-border: #a5d6a7;
+      --danger-soft: #ffebee;
+      --danger-border: #ef9a9a;
+      --neutral-soft: #eceff1;
+      --neutral-border: #b0bec5;
+      --neutral-text: #78909c;
+      --input-bg: #ffffff;
+      --input-border: #c5e1a5;
+      --focus-ring: rgba(46, 125, 50, 0.18);
+      --overlay: rgba(20, 40, 20, 0.45);
+    }
+
+    body[data-theme="dark"] {
+      --bg: #0b1220;
+      --bg-subtle: #111c2e;
+      --text: #dbe7f3;
+      --title: #4ade80;
+      --muted: #7dd3a0;
+      --card-bg: #162134;
+      --card-shadow: 0 2px 16px rgba(0, 0, 0, 0.5);
+      --border: #27364d;
+      --table-head: #1c3a2a;
+      --table-alt: #111c2e;
+      --success: #4ade80;
+      --danger: #f87171;
+      --accent: #22c55e;
+      --accent-contrast: #052e16;
+      --accent-soft: #14361f;
+      --accent-border: #166534;
+      --danger-soft: #3b1414;
+      --danger-border: #7f1d1d;
+      --neutral-soft: #1f2937;
+      --neutral-border: #374151;
+      --neutral-text: #9ca3af;
+      --input-bg: #0f1a2b;
+      --input-border: #334155;
+      --focus-ring: rgba(34, 197, 94, 0.22);
+      --overlay: rgba(0, 0, 0, 0.7);
+    }
+
+    body[data-theme="forest"] {
+      --bg: #e9f0e0;
+      --bg-subtle: #dbe8cf;
+      --text: #33402b;
+      --title: #1f4d2b;
+      --muted: #6b7f52;
+      --card-bg: #fbfdf7;
+      --card-shadow: 0 2px 12px rgba(52, 70, 38, 0.14);
+      --border: #cbd9bb;
+      --table-head: #b9cda3;
+      --table-alt: #f2f7ea;
+      --success: #2f6b34;
+      --danger: #a13d2d;
+      --accent: #4d7c0f;
+      --accent-contrast: #ffffff;
+      --accent-soft: #e4eed4;
+      --accent-border: #a9c47f;
+      --danger-soft: #f5e2dd;
+      --danger-border: #d8a99f;
+      --neutral-soft: #e2e7da;
+      --neutral-border: #b9c1ac;
+      --neutral-text: #7b8471;
+      --input-bg: #ffffff;
+      --input-border: #cbd9bb;
+      --focus-ring: rgba(77, 124, 15, 0.2);
+      --overlay: rgba(33, 45, 24, 0.5);
+    }
+
+    body[data-theme="ocean"] {
+      --bg: #e0f2fe;
+      --bg-subtle: #cfe9fb;
+      --text: #0c4a6e;
+      --title: #075985;
+      --muted: #3b82a6;
+      --card-bg: #ffffff;
+      --card-shadow: 0 2px 12px rgba(2, 80, 120, 0.12);
+      --border: #bae6fd;
+      --table-head: #a5d8f3;
+      --table-alt: #f0f9ff;
+      --success: #0369a1;
+      --danger: #b91c1c;
+      --accent: #0284c7;
+      --accent-contrast: #ffffff;
+      --accent-soft: #e0f2fe;
+      --accent-border: #7dd3fc;
+      --danger-soft: #fee2e2;
+      --danger-border: #fca5a5;
+      --neutral-soft: #e2e8f0;
+      --neutral-border: #b6c2d1;
+      --neutral-text: #64748b;
+      --input-bg: #ffffff;
+      --input-border: #bae6fd;
+      --focus-ring: rgba(2, 132, 199, 0.2);
+      --overlay: rgba(3, 45, 69, 0.5);
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* ============================================================
+       TELA DE LOGIN / CADASTRO
+       ============================================================ */
+    .auth-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 410px;
+      background-color: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 32px 28px;
+      box-shadow: var(--card-shadow);
+    }
+
+    .auth-brand {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .auth-logo {
+      font-size: 2.6rem;
+      display: block;
+    }
+
+    .auth-brand h1 {
+      color: var(--title);
+      font-size: 1.7rem;
+      margin-top: 6px;
+    }
+
+    .auth-brand p {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-top: 4px;
+    }
+
+    .auth-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      background-color: var(--bg-subtle);
+      padding: 5px;
+      border-radius: 12px;
+      margin-bottom: 22px;
+    }
+
+    .auth-tab {
+      border: none;
+      background: transparent;
+      padding: 10px;
+      border-radius: 9px;
+      font-weight: 700;
+      color: var(--muted);
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .auth-tab.active {
+      background-color: var(--card-bg);
+      color: var(--accent);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+    }
+
+    .auth-form label,
+    .modal label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      color: var(--muted);
+      margin: 14px 0 6px;
+    }
+
+    .auth-form input,
+    .modal input {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--input-border);
+      background-color: var(--input-bg);
+      color: var(--text);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .auth-form input:focus,
+    .modal input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--focus-ring);
+    }
+
+    .form-error {
+      color: var(--danger);
+      font-size: 0.82rem;
+      min-height: 18px;
+      margin-top: 10px;
+      line-height: 1.4;
+    }
+
+    .auth-note {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 0.75rem;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    .btn-primary {
+      width: 100%;
+      margin-top: 8px;
+      padding: 13px;
+      border: none;
+      border-radius: 10px;
+      background-color: var(--accent);
+      color: var(--accent-contrast);
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: filter 0.2s, opacity 0.2s;
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.08);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: wait;
+    }
+
+    /* ============================================================
+       DASHBOARD
+       ============================================================ */
+    .dashboard {
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 24px 20px 40px;
+    }
+
+    .dash-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .welcome {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .welcome #welcome-text {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--title);
+      line-height: 1.2;
+    }
+
+    .welcome small {
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-top: 3px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .icon-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background-color: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.85rem;
+      box-shadow: var(--card-shadow);
+      transition: transform 0.1s, background-color 0.2s;
+    }
+
+    .icon-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .icon-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .icon-btn.danger {
+      color: var(--danger);
+      border-color: var(--danger-border);
+    }
+
+    .icon-btn.admin {
+      color: var(--accent);
+      border-color: var(--accent-border);
+      background-color: var(--accent-soft);
+    }
+
+    /* Grid de Leituras */
+    .cards-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      width: 100%;
+      margin-bottom: 25px;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: var(--card-shadow);
+      text-align: center;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: bold;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .value {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: var(--success);
+    }
+
+    .bomba-ligada .value {
+      color: var(--success) !important;
+    }
+
+    .bomba-desligada .value {
+      color: var(--danger) !important;
+    }
+
+    /* Container da Tabela */
+    .table-container {
+      width: 100%;
+      background-color: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      margin-bottom: 25px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+
+    thead {
+      background-color: var(--table-head);
+    }
+
+    th,
+    td {
+      padding: 12px;
+      text-align: center;
+      color: var(--text);
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: var(--table-alt);
+    }
+
+    .tabela-ligada {
+      color: var(--success);
+      font-weight: bold;
+    }
+
+    .tabela-desligada {
+      color: var(--danger);
+      font-weight: bold;
+    }
+
+    /* Seção de Controles Inferiores */
+    .control-container {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .btn-control {
+      background-color: var(--card-bg);
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: var(--card-shadow);
+      border: none;
+      font-size: 0.95rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.1s, background-color 0.2s;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      user-select: none;
+      color: var(--text);
+    }
+
+    .btn-control:active {
+      transform: scale(0.98);
+    }
+
+    /* Cores do Botão de Operação Manual */
+    .modo-ativado {
+      background-color: var(--accent-soft);
+      border: 2px solid var(--accent-border);
+      color: var(--accent);
+    }
+
+    .modo-desativado {
+      background-color: var(--danger-soft);
+      border: 2px solid var(--danger-border);
+      color: var(--danger);
+    }
+
+    /* INTERRUPTOR MANUAL */
+    .btn-manual-desativado {
+      opacity: 0.45;
+      cursor: not-allowed !important;
+      background-color: var(--neutral-soft);
+      border: 2px solid var(--neutral-border);
+      color: var(--neutral-text);
+      pointer-events: none;
+    }
+
+    /* Cores Invertidas do Interruptor: Ligado = Verde, Desligado = Vermelho */
+    .btn-manual-bomba-desligada {
+      background-color: var(--danger-soft);
+      border: 2px solid var(--danger-border);
+      color: var(--text);
+    }
+
+    .btn-manual-bomba-ligada {
+      background-color: var(--accent-soft);
+      border: 2px solid var(--accent-border);
+      color: var(--text);
+    }
+
+    .btn-sub-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      opacity: 0.8;
+      font-weight: normal;
+    }
+
+    @keyframes flash {
+      0% {
+        background-color: var(--bg-subtle);
+      }
+
+      100% {
+        background-color: transparent;
+      }
+    }
+
+    .new-row {
+      animation: flash 1.5s ease-out;
+    }
+
+    /* ============================================================
+       MODAIS
+       ============================================================ */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background-color: var(--overlay);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 100;
+      backdrop-filter: blur(2px);
+    }
+
+    .modal {
+      width: 100%;
+      max-width: 440px;
+      background-color: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 26px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+      animation: pop 0.18s ease;
+    }
+
+    @keyframes pop {
+      from {
+        transform: scale(0.95);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .modal header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+
+    .modal h2 {
+      color: var(--title);
+      font-size: 1.2rem;
+      margin-bottom: 6px;
+    }
+
+    .modal header h2 {
+      margin-bottom: 0;
+    }
+
+    .modal p,
+    .modal-sub {
+      color: var(--muted);
+      font-size: 0.87rem;
+      line-height: 1.5;
+      margin-top: 6px;
+    }
+
+    .modal-close {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-size: 1.7rem;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .modal-actions.column {
+      flex-direction: column;
+    }
+
+    .modal-actions .btn-primary {
+      margin-top: 0;
+    }
+
+    .btn-danger,
+    .btn-secondary,
+    .btn-ghost {
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: filter 0.2s;
+    }
+
+    .btn-danger:hover,
+    .btn-secondary:hover,
+    .btn-ghost:hover {
+      filter: brightness(1.05);
+    }
+
+    .btn-danger {
+      background-color: var(--danger-soft);
+      color: var(--danger);
+      border-color: var(--danger-border);
+    }
+
+    .btn-secondary {
+      background-color: var(--accent-soft);
+      color: var(--accent);
+      border-color: var(--accent-border);
+    }
+
+    .btn-ghost {
+      background-color: transparent;
+      color: var(--muted);
+      border-color: var(--border);
+    }
+
+    /* Seletor de temas */
+    .theme-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .theme-option {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 12px;
+      border-radius: 12px;
+      border: 2px solid var(--border);
+      background-color: var(--bg-subtle);
+      cursor: pointer;
+      text-align: left;
+      color: var(--text);
+      transition: transform 0.15s, border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .theme-option:hover {
+      transform: translateY(-2px);
+    }
+
+    .theme-option.active {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--focus-ring);
+    }
+
+    .theme-swatch {
+      display: flex;
+      gap: 4px;
+      height: 34px;
+    }
+
+    .theme-swatch i {
+      flex: 1;
+      border-radius: 5px;
+    }
+
+    .theme-name {
+      font-weight: 800;
+      font-size: 0.9rem;
+    }
+
+    .theme-option small {
+      color: var(--muted);
+      font-size: 0.72rem;
+    }
+
+    .swatch-default i:nth-child(1) { background: #f1f8e9; }
+    .swatch-default i:nth-child(2) { background: #c5e1a5; }
+    .swatch-default i:nth-child(3) { background: #2e7d32; }
+    .swatch-dark i:nth-child(1) { background: #0b1220; }
+    .swatch-dark i:nth-child(2) { background: #27364d; }
+    .swatch-dark i:nth-child(3) { background: #22c55e; }
+    .swatch-forest i:nth-child(1) { background: #e9f0e0; }
+    .swatch-forest i:nth-child(2) { background: #b9cda3; }
+    .swatch-forest i:nth-child(3) { background: #4d7c0f; }
+    .swatch-ocean i:nth-child(1) { background: #e0f2fe; }
+    .swatch-ocean i:nth-child(2) { background: #7dd3fc; }
+    .swatch-ocean i:nth-child(3) { background: #0284c7; }
+
+    /* Toast de feedback */
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 26px;
+      transform: translateX(-50%) translateY(20px);
+      background-color: var(--accent);
+      color: var(--accent-contrast);
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      opacity: 0;
+      transition: opacity 0.3s, transform 0.3s;
+      z-index: 200;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      max-width: 90vw;
+      text-align: center;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Boot / carregamento inicial */
+    .boot-screen {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      background-color: var(--bg);
+      color: var(--muted);
+      z-index: 300;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .spinner {
+      width: 42px;
+      height: 42px;
+      border: 4px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.9s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* ============================================================
+       RELATÓRIO
+       ============================================================ */
+    .report-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--title);
+      line-height: 1.2;
+    }
+
+    .report-filters {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      background-color: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px;
+      box-shadow: var(--card-shadow);
+      margin-bottom: 14px;
+    }
+
+    .report-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1 1 180px;
+    }
+
+    .report-field label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      color: var(--muted);
+    }
+
+    .report-field input {
+      padding: 11px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--input-border);
+      background-color: var(--input-bg);
+      color: var(--text);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .report-field input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--focus-ring);
+    }
+
+    .report-btn {
+      width: auto;
+      margin-top: 0;
+      padding: 12px 26px;
+    }
+
+    .report-summary {
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin: 4px 0 14px;
+    }
+
+    .report-pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .report-pagination span {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    .report-pagination button {
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background-color: var(--card-bg);
+      color: var(--text);
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .report-pagination button:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    @media (max-width: 520px) {
+      .control-container {
+        grid-template-columns: 1fr;
+      }
+
+      .theme-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .welcome #welcome-text {
+        font-size: 1.25rem;
+      }
+    }
+  </style>
+</head>
+
+<body data-theme="default">
+
+  <!-- ============ BOOT ============ -->
+  <div id="boot-screen" class="boot-screen">
+    <div class="spinner"></div>
+    <p>Carregando EcoDrop...</p>
+  </div>
+
+  <!-- ============ TELA DE LOGIN ============ -->
+  <section id="auth-screen" class="auth-screen hidden">
+    <div class="auth-card">
+      <div class="auth-brand">
+        <span class="auth-logo">🌿</span>
+        <h1>EcoDrop</h1>
+        <p>Irrigação ecológica inteligente</p>
+      </div>
+
+      <form id="form-login" class="auth-form" onsubmit="fazerLogin(event)">
+        <label for="login-email">E-mail</label>
+        <input id="login-email" type="email" autocomplete="email" placeholder="seu@email.com" required>
+
+        <label for="login-senha">Senha</label>
+        <input id="login-senha" type="password" autocomplete="current-password" placeholder="••••••••" required>
+
+        <p id="login-erro" class="form-error"></p>
+        <button id="login-btn" class="btn-primary" type="submit">Entrar</button>
+      </form>
+
+      <p class="auth-note">O cadastro de novos usuários é feito exclusivamente pelo administrador.</p>
+    </div>
+  </section>
+
+  <!-- ============ DASHBOARD ============ -->
+  <main id="dashboard" class="dashboard hidden">
+    <header class="dash-header">
+      <div class="welcome">
+        <span id="welcome-text">Bem vindo</span>
+        <small>🌿 EcoDrop · Irrigação Ecológica</small>
+      </div>
+
+      <div class="header-actions">
+        <button id="admin-area" class="icon-btn admin hidden" type="button" onclick="abrirModal('modal-cadastro')"
+          title="Cadastrar usuário habilitado">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <line x1="19" y1="8" x2="19" y2="14" />
+            <line x1="22" y1="11" x2="16" y2="11" />
+          </svg>
+          <span>Cadastrar usuário</span>
+        </button>
+
+        <button class="icon-btn" type="button" onclick="abrirRelatorio()" title="Relatório de leituras">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10" />
+            <line x1="12" y1="20" x2="12" y2="4" />
+            <line x1="6" y1="20" x2="6" y2="14" />
+          </svg>
+          <span>Relatório</span>
+        </button>
+
+        <button class="icon-btn" type="button" onclick="abrirModal('modal-layout')" title="Layout / Temas">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7" rx="1" />
+            <rect x="14" y="3" width="7" height="7" rx="1" />
+            <rect x="3" y="14" width="7" height="7" rx="1" />
+            <rect x="14" y="14" width="7" height="7" rx="1" />
+          </svg>
+          <span>Layout</span>
+        </button>
+
+        <button class="icon-btn danger" type="button" onclick="abrirModal('modal-logout')" title="Sair / Trocar senha">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+          <span>Sair</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="cards-container">
+      <div class="card"><span class="label">Temperatura Ar</span><span id="temp" class="value">--</span></div>
+      <div class="card"><span class="label">Umidade Solo</span><span id="solo" class="value">--</span></div>
+      <div id="status-card" class="card"><span class="label">Bomba d'água</span><span id="bomba" class="value">--</span>
+      </div>
+    </div>
+
+    <div id="sync-info" style="text-align:center;font-size:.85rem;opacity:.75;margin:-.4rem 0 1rem;">
+      Aguardando dados...
+    </div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Data / Hora</th>
+            <th>Temp.</th>
+            <th>Umidade (%)</th>
+            <th>Status Bomba</th>
+          </tr>
+        </thead>
+        <tbody id="tabela-corpo"></tbody>
+      </table>
+    </div>
+
+    <div class="control-container">
+      <button id="rotina-btn" class="btn-control" onclick="AlternarRotina()">
+        <span class="btn-sub-label">⚙️ Operacao Manual</span>
+        <span id="rotina-status" style="font-size: 1.1rem;">--</span>
+      </button>
+
+      <button id="manual-btn" class="btn-control" onclick="AcionarBombaManual()">
+        <span class="btn-sub-label">⚡ Interruptor</span>
+        <span id="manual-status" style="font-size: 1.1rem;">Desligado</span>
+      </button>
+    </div>
+  </main>
+
+  <!-- ============ TELA DE RELATÓRIO ============ -->
+  <section id="report-screen" class="dashboard hidden">
+    <header class="dash-header">
+      <div class="welcome">
+        <span class="report-title">Relatório</span>
+        <small>📊 Histórico de leituras por período</small>
+      </div>
+
+      <div class="header-actions">
+        <button class="icon-btn" type="button" onclick="voltarDashboard()" title="Voltar ao dashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12" />
+            <polyline points="12 19 5 12 12 5" />
+          </svg>
+          <span>Voltar</span>
+        </button>
+      </div>
+    </header>
+
+    <form class="report-filters" onsubmit="consultarRelatorio(event)">
+      <div class="report-field">
+        <label for="relatorio-inicio">Período inicial</label>
+        <input id="relatorio-inicio" type="date" required>
+      </div>
+
+      <div class="report-field">
+        <label for="relatorio-fim">Período final</label>
+        <input id="relatorio-fim" type="date" required>
+      </div>
+
+      <button id="relatorio-btn-consultar" class="btn-primary report-btn" type="submit">Consultar</button>
+    </form>
+
+    <p id="relatorio-erro" class="form-error"></p>
+    <p id="relatorio-resumo" class="report-summary"></p>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Data / Hora</th>
+            <th>Temperatura</th>
+            <th>Umidade Solo</th>
+            <th>Solo (bruto)</th>
+            <th>Bomba</th>
+          </tr>
+        </thead>
+        <tbody id="relatorio-corpo">
+          <tr>
+            <td colspan="5">Selecione um período e clique em Consultar.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="report-pagination">
+      <button id="relatorio-anterior" type="button" onclick="mudarPaginaRelatorio(-1)" disabled>Anterior</button>
+      <span id="relatorio-pagina-info">Página 1 de 1</span>
+      <button id="relatorio-proxima" type="button" onclick="mudarPaginaRelatorio(1)" disabled>Avançar</button>
+    </div>
+  </section>
+
+  <!-- ============ MODAL: LAYOUT ============ -->
+  <div id="modal-layout" class="modal-backdrop hidden" onclick="fecharAoClicar(event, 'modal-layout')">
+    <div class="modal">
+      <header>
+        <h2>Layout</h2>
+        <button class="modal-close" type="button" onclick="fecharModal('modal-layout')" aria-label="Fechar">&times;</button>
+      </header>
+      <p class="modal-sub">Escolha um tema para visualizar o painel. Sua preferência fica salva neste navegador.</p>
+
+      <div class="theme-grid">
+        <button class="theme-option" data-tema="default" type="button" onclick="selecionarTema('default')">
+          <span class="theme-swatch swatch-default"><i></i><i></i><i></i></span>
+          <span class="theme-name">Default</span>
+          <small>Claro e natural</small>
+        </button>
+
+        <button class="theme-option" data-tema="dark" type="button" onclick="selecionarTema('dark')">
+          <span class="theme-swatch swatch-dark"><i></i><i></i><i></i></span>
+          <span class="theme-name">Dark</span>
+          <small>Escuro e confortável</small>
+        </button>
+
+        <button class="theme-option" data-tema="forest" type="button" onclick="selecionarTema('forest')">
+          <span class="theme-swatch swatch-forest"><i></i><i></i><i></i></span>
+          <span class="theme-name">Floresta</span>
+          <small>Tons terrosos e verdes</small>
+        </button>
+
+        <button class="theme-option" data-tema="ocean" type="button" onclick="selecionarTema('ocean')">
+          <span class="theme-swatch swatch-ocean"><i></i><i></i><i></i></span>
+          <span class="theme-name">Oceano</span>
+          <small>Azul e refrescante</small>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ MODAL: LOGOUT ============ -->
+  <div id="modal-logout" class="modal-backdrop hidden" onclick="fecharAoClicar(event, 'modal-logout')">
+    <div class="modal">
+      <h2>Deseja mesmo sair?</h2>
+      <p>Você pode encerrar a sessão agora ou trocar sua senha antes de sair.</p>
+
+      <div class="modal-actions column">
+        <button class="btn-danger" type="button" onclick="sair()">Sair da conta</button>
+        <button class="btn-secondary" type="button" onclick="abrirTrocaSenha()">Trocar senha</button>
+        <button class="btn-ghost" type="button" onclick="fecharModal('modal-logout')">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ MODAL: TROCAR SENHA ============ -->
+  <div id="modal-senha" class="modal-backdrop hidden" onclick="fecharAoClicar(event, 'modal-senha')">
+    <form class="modal" onsubmit="trocarSenha(event)">
+      <header>
+        <h2>Trocar senha</h2>
+        <button class="modal-close" type="button" onclick="fecharModal('modal-senha')" aria-label="Fechar">&times;</button>
+      </header>
+      <p class="modal-sub">Informe sua senha atual e defina uma nova senha com pelo menos 6 caracteres.</p>
+
+      <label for="senha-atual">Senha atual</label>
+      <input id="senha-atual" type="password" autocomplete="current-password" required>
+
+      <label for="senha-nova">Nova senha</label>
+      <input id="senha-nova" type="password" autocomplete="new-password" required>
+
+      <label for="senha-conf">Confirmar nova senha</label>
+      <input id="senha-conf" type="password" autocomplete="new-password" required>
+
+      <p id="senha-erro" class="form-error"></p>
+
+      <div class="modal-actions">
+        <button type="button" class="btn-ghost" onclick="fecharModal('modal-senha')">Cancelar</button>
+        <button id="senha-btn" type="submit" class="btn-primary">Salvar</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- ============ MODAL: CADASTRAR USUÁRIO (ADMIN) ============ -->
+  <div id="modal-cadastro" class="modal-backdrop hidden" onclick="fecharAoClicar(event, 'modal-cadastro')">
+    <form class="modal" onsubmit="criarUsuarioHabilitado(event)">
+      <header>
+        <h2>Cadastrar usuário habilitado</h2>
+        <button class="modal-close" type="button" onclick="fecharModal('modal-cadastro')" aria-label="Fechar">&times;</button>
+      </header>
+      <p class="modal-sub">Crie as credenciais de acesso ao sistema. Somente o administrador pode habilitar novos usuários.</p>
+
+      <label for="novo-email">E-mail</label>
+      <input id="novo-email" type="email" autocomplete="off" placeholder="usuario@email.com" required>
+
+      <label for="nova-senha">Senha</label>
+      <input id="nova-senha" type="password" autocomplete="new-password" placeholder="mínimo 6 caracteres" required>
+
+      <label for="nova-senha-conf">Confirmar senha</label>
+      <input id="nova-senha-conf" type="password" autocomplete="new-password" placeholder="repita a senha" required>
+
+      <p id="novo-erro" class="form-error"></p>
+
+      <div class="modal-actions">
+        <button type="button" class="btn-ghost" onclick="fecharModal('modal-cadastro')">Cancelar</button>
+        <button id="novo-btn" type="submit" class="btn-primary">Habilitar usuário</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- ============ TOAST ============ -->
+  <div id="toast" class="toast hidden"></div>
+
+  <!-- SDKs do Firebase (Versão Compat) -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+
+  <script>
+    /* ============================================================
+       CONFIGURAÇÃO DO FIREBASE
+       ============================================================ */
+    const firebaseConfig = {
+      apiKey: "AIzaSyCkaTpnvG19tzhzposdxVRRG7xVO6TkCUY",
+      authDomain: "ecodrop-829e7.firebaseapp.com",
+      databaseURL: "https://ecodrop-829e7-default-rtdb.firebaseio.com",
+      projectId: "ecodrop-829e7",
+      storageBucket: "ecodrop-829e7.appspot.com",
+      messagingSenderId: "33036528124",
+      appId: "1:33036528124:web:03837eaa7a90a4aedcea79"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.database();
+
+    /* ============================================================
+       USUÁRIO ADMINISTRADOR
+       ============================================================ */
+    const ADMIN_EMAIL = "administrador@ecodrop.com";
+    const CHAVE_TEMA = "ecodrop_tema";
+
+    /* ============================================================
+       ESTADO GLOBAL
+       ============================================================ */
+    let currentUser = null;
+    let dashAtivo = false;
+    let dashListeners = [];
+    let automacaoAtiva = true;
+    let estadoBombaManual = false;
+    let ultimoRegistroMs = 0;
+    let syncTimer = null;
+    let toastTimer = null;
+    let relatorioRegistros = [];
+    let relatorioPagina = 1;
+    const RELATORIO_POR_PAGINA = 10;
+
+    /* ============================================================
+       TEMA / LAYOUT
+       ============================================================ */
+    function aplicarTema(tema) {
+      const permitidos = ["default", "dark", "forest", "ocean"];
+      const escolhido = permitidos.includes(tema) ? tema : "default";
+
+      document.body.dataset.theme = escolhido;
+      localStorage.setItem(CHAVE_TEMA, escolhido);
+
+      document.querySelectorAll(".theme-option").forEach((el) => {
+        el.classList.toggle("active", el.dataset.tema === escolhido);
+      });
+    }
+
+    function selecionarTema(tema) {
+      aplicarTema(tema);
+      fecharModal("modal-layout");
+      toast("Tema aplicado: " + tema.charAt(0).toUpperCase() + tema.slice(1));
+    }
+
+    /* ============================================================
+       UTILITÁRIOS DE UI
+       ============================================================ */
+    function abrirModal(id) {
+      document.getElementById(id).classList.remove("hidden");
+    }
+
+    function fecharModal(id) {
+      document.getElementById(id).classList.add("hidden");
+    }
+
+    function fecharAoClicar(event, id) {
+      if (event.target.id === id) fecharModal(id);
+    }
+
+    function toast(mensagem) {
+      const el = document.getElementById("toast");
+      el.textContent = mensagem;
+      el.classList.remove("hidden");
+      // força reflow para reiniciar a animação
+      void el.offsetWidth;
+      el.classList.add("show");
+
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        el.classList.remove("show");
+        setTimeout(() => el.classList.add("hidden"), 300);
+      }, 3000);
+    }
+
+    function nomeDeEmail(email) {
+      const prefixo = (email || "").split("@")[0].replace(/[._-]+/g, " ").trim();
+      if (!prefixo) return "Usuário";
+      return prefixo.replace(/\b\w/g, (c) => c.toUpperCase());
+    }
+
+    function nomeDoUsuario(user) {
+      if (!user) return "Usuário";
+      if (user.displayName) return user.displayName;
+      return nomeDeEmail(user.email);
+    }
+
+    function isAdmin(user) {
+      return !!user && (user.email || "").toLowerCase() === ADMIN_EMAIL.toLowerCase();
+    }
+
+    function traduzErro(err) {
+      const mapa = {
+        "auth/invalid-email": "E-mail inválido.",
+        "auth/user-not-found": "Usuário não encontrado. Verifique o e-mail.",
+        "auth/wrong-password": "Senha incorreta.",
+        "auth/invalid-credential": "E-mail ou senha incorretos.",
+        "auth/invalid-login-credentials": "E-mail ou senha incorretos.",
+        "auth/email-already-in-use": "Este e-mail já está cadastrado.",
+        "auth/weak-password": "A senha deve ter pelo menos 6 caracteres.",
+        "auth/too-many-requests": "Muitas tentativas. Tente novamente mais tarde.",
+        "auth/network-request-failed": "Falha de conexão. Verifique sua internet.",
+        "auth/requires-recent-login": "Faça login novamente para alterar a senha.",
+        "auth/operation-not-allowed": "O login por e-mail/senha não está habilitado no Firebase.",
+        "auth/missing-password": "Informe a senha."
+      };
+      return mapa[err.code] || err.message || "Ocorreu um erro inesperado.";
+    }
+
+    function definirCarregando(botao, carregando, textoOriginal, textoCarregando) {
+      botao.disabled = carregando;
+      botao.textContent = carregando ? textoCarregando : textoOriginal;
+    }
+
+    /* ============================================================
+       AUTENTICAÇÃO
+       ============================================================ */
+    async function fazerLogin(event) {
+      event.preventDefault();
+
+      const email = document.getElementById("login-email").value.trim();
+      const senha = document.getElementById("login-senha").value;
+      const erroEl = document.getElementById("login-erro");
+      const botao = document.getElementById("login-btn");
+
+      erroEl.textContent = "";
+
+      if (!email || !senha) {
+        erroEl.textContent = "Informe e-mail e senha.";
+        return;
+      }
+
+      definirCarregando(botao, true, "Entrar", "Entrando...");
+      try {
+        await auth.signInWithEmailAndPassword(email, senha);
+        toast("Login realizado com sucesso!");
+      } catch (err) {
+        erroEl.textContent = traduzErro(err);
+      } finally {
+        definirCarregando(botao, false, "Entrar", "Entrando...");
+      }
+    }
+
+    let authSecundario = null;
+
+    function obterAuthSecundario() {
+      if (authSecundario) return authSecundario;
+
+      let app;
+      try {
+        app = firebase.app("ecodrop-admin");
+      } catch (e) {
+        app = firebase.initializeApp(firebaseConfig, "ecodrop-admin");
+      }
+      authSecundario = firebase.auth(app);
+      return authSecundario;
+    }
+
+    async function criarUsuarioHabilitado(event) {
+      event.preventDefault();
+
+      const erroEl = document.getElementById("novo-erro");
+      const botao = document.getElementById("novo-btn");
+      erroEl.textContent = "";
+
+      if (!isAdmin(currentUser)) {
+        erroEl.textContent = "Apenas o administrador pode cadastrar usuários.";
+        return;
+      }
+
+      const email = document.getElementById("novo-email").value.trim();
+      const senha = document.getElementById("nova-senha").value;
+      const confirmacao = document.getElementById("nova-senha-conf").value;
+
+      if (!email || !senha) {
+        erroEl.textContent = "Informe e-mail e senha.";
+        return;
+      }
+      if (senha.length < 6) {
+        erroEl.textContent = "A senha deve ter pelo menos 6 caracteres.";
+        return;
+      }
+      if (senha !== confirmacao) {
+        erroEl.textContent = "As senhas não coincidem.";
+        return;
+      }
+
+      definirCarregando(botao, true, "Habilitar usuário", "Habilitando...");
+      const secundario = obterAuthSecundario();
+      try {
+        const credencial = await secundario.createUserWithEmailAndPassword(email, senha);
+        await credencial.user.updateProfile({ displayName: nomeDeEmail(email) });
+        await secundario.signOut();
+
+        document.getElementById("novo-email").value = "";
+        document.getElementById("nova-senha").value = "";
+        document.getElementById("nova-senha-conf").value = "";
+        fecharModal("modal-cadastro");
+        toast("Usuário habilitado: " + email);
+      } catch (err) {
+        erroEl.textContent = traduzErro(err);
+      } finally {
+        try { await secundario.signOut(); } catch (e) { /* ignora */ }
+        definirCarregando(botao, false, "Habilitar usuário", "Habilitando...");
+      }
+    }
+
+    async function sair() {
+      try {
+        await auth.signOut();
+        fecharModal("modal-logout");
+        toast("Sessão encerrada.");
+      } catch (err) {
+        toast("Não foi possível sair: " + traduzErro(err));
+      }
+    }
+
+    function abrirTrocaSenha() {
+      fecharModal("modal-logout");
+      document.getElementById("senha-erro").textContent = "";
+      document.getElementById("senha-atual").value = "";
+      document.getElementById("senha-nova").value = "";
+      document.getElementById("senha-conf").value = "";
+      abrirModal("modal-senha");
+    }
+
+    async function trocarSenha(event) {
+      event.preventDefault();
+
+      const atual = document.getElementById("senha-atual").value;
+      const nova = document.getElementById("senha-nova").value;
+      const confirmacao = document.getElementById("senha-conf").value;
+      const erroEl = document.getElementById("senha-erro");
+      const botao = document.getElementById("senha-btn");
+
+      erroEl.textContent = "";
+
+      if (!currentUser) {
+        erroEl.textContent = "Usuário não autenticado.";
+        return;
+      }
+      if (nova.length < 6) {
+        erroEl.textContent = "A nova senha deve ter pelo menos 6 caracteres.";
+        return;
+      }
+      if (nova !== confirmacao) {
+        erroEl.textContent = "As senhas novas não coincidem.";
+        return;
+      }
+
+      definirCarregando(botao, true, "Salvar", "Salvando...");
+      try {
+        const credencial = firebase.auth.EmailAuthProvider.credential(currentUser.email, atual);
+        await currentUser.reauthenticateWithCredential(credencial);
+        await currentUser.updatePassword(nova);
+
+        fecharModal("modal-senha");
+        document.getElementById("senha-atual").value = "";
+        document.getElementById("senha-nova").value = "";
+        document.getElementById("senha-conf").value = "";
+        toast("Senha alterada com sucesso!");
+      } catch (err) {
+        erroEl.textContent = traduzErro(err);
+      } finally {
+        definirCarregando(botao, false, "Salvar", "Salvando...");
+      }
+    }
+
+    /* ============================================================
+       FLUXO DE AUTENTICAÇÃO
+       ============================================================ */
+    function iniciarFluxoAuth() {
+      auth.onAuthStateChanged(handleUser);
+    }
+
+    /* ============================================================
+       TRANSIÇÃO LOGIN <-> DASHBOARD
+       ============================================================ */
+    function handleUser(user) {
+      currentUser = user;
+
+      document.getElementById("boot-screen").classList.add("hidden");
+      fecharModal("modal-logout");
+      fecharModal("modal-senha");
+      fecharModal("modal-cadastro");
+
+      if (user) {
+        document.getElementById("auth-screen").classList.add("hidden");
+        document.getElementById("dashboard").classList.remove("hidden");
+        document.getElementById("report-screen").classList.add("hidden");
+        document.getElementById("welcome-text").textContent = "Bem vindo, " + nomeDoUsuario(user);
+        document.getElementById("admin-area").classList.toggle("hidden", !isAdmin(user));
+        iniciarDashboard();
+      } else {
+        pararDashboard();
+        document.getElementById("dashboard").classList.add("hidden");
+        document.getElementById("report-screen").classList.add("hidden");
+        document.getElementById("auth-screen").classList.remove("hidden");
+        document.getElementById("login-senha").value = "";
+        document.getElementById("login-erro").textContent = "";
+      }
+    }
+
+    /* ============================================================
+       DASHBOARD EM TEMPO REAL
+       ============================================================ */
+    function obterTextoCard(statusBomba) {
+      if (automacaoAtiva) {
+        return statusBomba ? "Auto (Ligada)" : "Auto (Desligada)";
+      }
+      return statusBomba ? "Manual (Ligada)" : "Manual (Desligada)";
+    }
+
+    function textoStatusHistorico(registro) {
+      const manual = registro.modo === "MANUAL";
+      const ligada = !!registro.bomba;
+
+      if (manual) return ligada ? "Manual (Ligada)" : "Manual (Desligada)";
+      return ligada ? "Auto (Ligada)" : "Auto (Desligada)";
+    }
+
+    function atualizarSyncInfo() {
+      const el = document.getElementById("sync-info");
+      if (!el) return;
+
+      if (!ultimoRegistroMs) {
+        el.innerText = "Aguardando dados...";
+        el.style.color = "";
+        return;
+      }
+
+      const idadeSeg = Math.max(0, Math.round((Date.now() - ultimoRegistroMs) / 1000));
+
+      if (idadeSeg < 15) {
+        el.innerText = "Atualizado agora";
+        el.style.color = "";
+      } else if (idadeSeg < 60) {
+        el.innerText = "Última atualização há " + idadeSeg + "s";
+        el.style.color = "";
+      } else {
+        const min = Math.round(idadeSeg / 60);
+        el.innerText = "Sem atualização há " + min + " min — verifique o dispositivo";
+        el.style.color = "#e74c3c";
+      }
+    }
+
+    function iniciarDashboard() {
+      if (dashAtivo) return;
+      dashAtivo = true;
+      ultimoRegistroMs = 0;
+      renderHistorico([]);
+      atualizarSyncInfo();
+      syncTimer = setInterval(atualizarSyncInfo, 5000);
+
+      const refEstado = db.ref("dispositivos/ESP32_Solo_01/estado_atual");
+      const cbEstado = (snapshot) => {
+        const data = snapshot.val();
+        if (!data) return;
+
+        const temp = data.temperatura || 0;
+        const umid = data.umidade_solo || 0;
+        const statusBomba = data.bomba || false;
+
+        document.getElementById("temp").innerText = temp > 0 ? temp.toFixed(1) + "°C" : "ERRO";
+        document.getElementById("solo").innerText = umid.toFixed(0) + "%";
+
+        if (automacaoAtiva) {
+          const bCard = document.getElementById("status-card");
+          const bTxt = document.getElementById("bomba");
+          bTxt.innerText = obterTextoCard(statusBomba);
+          bCard.className = statusBomba ? "card bomba-ligada" : "card bomba-desligada";
+        }
+      };
+      refEstado.on("value", cbEstado);
+
+      const refComando = db.ref("atuadores/bomba_dagua/comando_manual");
+      const cbComando = (snapshot) => {
+        estadoBombaManual = snapshot.val() || false;
+
+        if (!automacaoAtiva) {
+          atualizarBotaoManual();
+          document.getElementById("bomba").innerText = obterTextoCard(estadoBombaManual);
+          document.getElementById("status-card").className =
+            estadoBombaManual ? "card bomba-ligada" : "card bomba-desligada";
+        }
+      };
+      refComando.on("value", cbComando);
+
+      const refModo = db.ref("atuadores/bomba_dagua/modo");
+      const cbModo = (snapshot) => {
+        const modo = snapshot.val() || "AUTOMATICO";
+        automacaoAtiva = (modo === "AUTOMATICO");
+
+        const rBtn = document.getElementById("rotina-btn");
+        const rTxt = document.getElementById("rotina-status");
+        const mBtn = document.getElementById("manual-btn");
+        const mTxt = document.getElementById("manual-status");
+
+        if (automacaoAtiva) {
+          rTxt.innerText = "Desativado";
+          rBtn.className = "btn-control modo-desativado";
+          mTxt.innerText = "BLOQUEADO";
+          mBtn.className = "btn-control btn-manual-desativado";
+
+          db.ref("dispositivos/ESP32_Solo_01/estado_atual/bomba").once("value", (snap) => {
+            const statusBomba = snap.val() || false;
+            document.getElementById("bomba").innerText = obterTextoCard(statusBomba);
+            document.getElementById("status-card").className =
+              statusBomba ? "card bomba-ligada" : "card bomba-desligada";
+          });
+        } else {
+          rTxt.innerText = "Ativado";
+          rBtn.className = "btn-control modo-ativado";
+          atualizarBotaoManual();
+          document.getElementById("bomba").innerText = obterTextoCard(estadoBombaManual);
+          document.getElementById("status-card").className =
+            estadoBombaManual ? "card bomba-ligada" : "card bomba-desligada";
+        }
+      };
+      refModo.on("value", cbModo);
+
+      const refHistorico = db.ref("dispositivos/ESP32_Solo_01/historico").limitToLast(10);
+      const cbHistorico = (snapshot) => {
+        const dados = snapshot.val() || {};
+        const registros = Object.entries(dados)
+          .map(([id, registro]) => Object.assign({ id }, registro))
+          .sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+        ultimoRegistroMs = registros.length ? (registros[0].timestamp || 0) : 0;
+        atualizarSyncInfo();
+        renderHistorico(registros);
+      };
+      refHistorico.on("value", cbHistorico);
+
+      dashListeners = [
+        () => refEstado.off("value", cbEstado),
+        () => refComando.off("value", cbComando),
+        () => refModo.off("value", cbModo),
+        () => refHistorico.off("value", cbHistorico)
+      ];
+    }
+
+    function pararDashboard() {
+      dashAtivo = false;
+      dashListeners.forEach((fn) => fn());
+      dashListeners = [];
+      if (syncTimer) {
+        clearInterval(syncTimer);
+        syncTimer = null;
+      }
+    }
+
+    function atualizarBotaoManual() {
+      const mBtn = document.getElementById("manual-btn");
+      const mTxt = document.getElementById("manual-status");
+
+      if (estadoBombaManual) {
+        mTxt.innerText = "Ligado";
+        mBtn.className = "btn-control btn-manual-bomba-ligada";
+      } else {
+        mTxt.innerText = "Desligado";
+        mBtn.className = "btn-control btn-manual-bomba-desligada";
+      }
+    }
+
+    function AlternarRotina() {
+      const indoParaManual = automacaoAtiva;
+      db.ref("atuadores/bomba_dagua/modo").set(indoParaManual ? "MANUAL" : "AUTOMATICO");
+
+      if (indoParaManual) {
+        db.ref("dispositivos/ESP32_Solo_01/estado_atual/bomba").once("value", (snap) => {
+          db.ref("atuadores/bomba_dagua/comando_manual").set(snap.val() || false);
+        });
+      }
+    }
+
+    function AcionarBombaManual() {
+      if (automacaoAtiva) return;
+
+      estadoBombaManual = !estadoBombaManual;
+      atualizarBotaoManual();
+      db.ref("atuadores/bomba_dagua/comando_manual").set(estadoBombaManual);
+    }
+
+    function formatarDataHora(timestamp) {
+      if (!timestamp) return "--";
+      return new Date(timestamp).toLocaleString("pt-BR", {
+        day: "2-digit", month: "2-digit", year: "2-digit",
+        hour: "2-digit", minute: "2-digit", second: "2-digit"
+      });
+    }
+
+    function renderHistorico(registros) {
+      let h = "";
+      registros.forEach((l) => {
+        const classeBomba = l.bomba ? "tabela-ligada" : "tabela-desligada";
+        const textoBomba = textoStatusHistorico(l);
+        const tempTexto = l.temperatura > 0 ? Number(l.temperatura).toFixed(1) + "°C" : "---";
+        const umidTexto = (typeof l.umidade_solo === "number") ? l.umidade_solo.toFixed(0) + "%" : "---";
+
+        h += `<tr>
+                <td>${formatarDataHora(l.timestamp)}</td>
+                <td>${tempTexto}</td>
+                <td>${umidTexto}</td>
+                <td class="${classeBomba}">${textoBomba}</td>
+              </tr>`;
+      });
+      document.getElementById("tabela-corpo").innerHTML = h;
+    }
+
+    /* ============================================================
+       RELATÓRIO POR PERÍODO
+       ============================================================ */
+    function abrirRelatorio() {
+      document.getElementById("dashboard").classList.add("hidden");
+      document.getElementById("report-screen").classList.remove("hidden");
+
+      relatorioRegistros = [];
+      relatorioPagina = 1;
+      document.getElementById("relatorio-erro").textContent = "";
+      document.getElementById("relatorio-resumo").textContent = "";
+      document.getElementById("relatorio-pagina-info").textContent = "Página 1 de 1";
+      document.getElementById("relatorio-anterior").disabled = true;
+      document.getElementById("relatorio-proxima").disabled = true;
+      document.getElementById("relatorio-corpo").innerHTML =
+        '<tr><td colspan="5">Selecione um período e clique em Consultar.</td></tr>';
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function voltarDashboard() {
+      document.getElementById("report-screen").classList.add("hidden");
+      document.getElementById("dashboard").classList.remove("hidden");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function consultarRelatorio(event) {
+      event.preventDefault();
+
+      const erroEl = document.getElementById("relatorio-erro");
+      const botao = document.getElementById("relatorio-btn-consultar");
+      const inicioStr = document.getElementById("relatorio-inicio").value;
+      const fimStr = document.getElementById("relatorio-fim").value;
+
+      erroEl.textContent = "";
+
+      if (!inicioStr || !fimStr) {
+        erroEl.textContent = "Informe a data inicial e a data final.";
+        return;
+      }
+
+      const inicioMs = new Date(inicioStr + "T00:00:00").getTime();
+      const fimMs = new Date(fimStr + "T23:59:59.999").getTime();
+
+      if (inicioMs > fimMs) {
+        erroEl.textContent = "A data inicial não pode ser maior que a data final.";
+        return;
+      }
+
+      definirCarregando(botao, true, "Consultar", "Consultando...");
+
+      db.ref("dispositivos/ESP32_Solo_01/historico")
+        .orderByChild("timestamp")
+        .startAt(inicioMs)
+        .endAt(fimMs)
+        .once("value")
+        .then((snapshot) => {
+          const dados = snapshot.val() || {};
+          relatorioRegistros = Object.entries(dados)
+            .map(([id, registro]) => Object.assign({ id }, registro))
+            .sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
+          relatorioPagina = 1;
+          renderRelatorioPagina();
+        })
+        .catch((err) => {
+          erroEl.textContent = "Erro ao consultar o histórico: " + (err.message || err);
+        })
+        .finally(() => {
+          definirCarregando(botao, false, "Consultar", "Consultando...");
+        });
+    }
+
+    function mudarPaginaRelatorio(delta) {
+      const totalPaginas = Math.max(1, Math.ceil(relatorioRegistros.length / RELATORIO_POR_PAGINA));
+      const destino = relatorioPagina + delta;
+
+      if (destino < 1 || destino > totalPaginas) return;
+
+      relatorioPagina = destino;
+      renderRelatorioPagina();
+    }
+
+    function renderRelatorioPagina() {
+      const corpo = document.getElementById("relatorio-corpo");
+      const resumo = document.getElementById("relatorio-resumo");
+      const info = document.getElementById("relatorio-pagina-info");
+      const btnAnterior = document.getElementById("relatorio-anterior");
+      const btnProxima = document.getElementById("relatorio-proxima");
+
+      const total = relatorioRegistros.length;
+      const totalPaginas = Math.max(1, Math.ceil(total / RELATORIO_POR_PAGINA));
+
+      if (relatorioPagina > totalPaginas) relatorioPagina = totalPaginas;
+
+      if (total === 0) {
+        corpo.innerHTML = '<tr><td colspan="5">Nenhum registro encontrado para o período selecionado.</td></tr>';
+        resumo.textContent = "0 registro(s)";
+        info.textContent = "Página 1 de 1";
+        btnAnterior.disabled = true;
+        btnProxima.disabled = true;
+        return;
+      }
+
+      const inicio = (relatorioPagina - 1) * RELATORIO_POR_PAGINA;
+      const pagina = relatorioRegistros.slice(inicio, inicio + RELATORIO_POR_PAGINA);
+
+      let h = "";
+      pagina.forEach((l) => {
+        const classeBomba = l.bomba ? "tabela-ligada" : "tabela-desligada";
+        const textoBomba = textoStatusHistorico(l);
+        const tempTexto = l.temperatura > 0 ? Number(l.temperatura).toFixed(1) + "°C" : "---";
+        const umidTexto = (typeof l.umidade_solo === "number") ? l.umidade_solo.toFixed(0) + "%" : "---";
+        const soloTexto = (typeof l.solo_bruto === "number") ? l.solo_bruto : "---";
+
+        h += `<tr>
+                <td>${formatarDataHora(l.timestamp)}</td>
+                <td>${tempTexto}</td>
+                <td>${umidTexto}</td>
+                <td>${soloTexto}</td>
+                <td class="${classeBomba}">${textoBomba}</td>
+              </tr>`;
+      });
+      corpo.innerHTML = h;
+
+      const temps = relatorioRegistros.filter((r) => r.temperatura > 0).map((r) => Number(r.temperatura));
+      const umids = relatorioRegistros
+        .filter((r) => typeof r.umidade_solo === "number")
+        .map((r) => Number(r.umidade_solo));
+      const mediaTemp = temps.length ? (temps.reduce((a, b) => a + b, 0) / temps.length).toFixed(1) + "°C" : "---";
+      const mediaUmid = umids.length ? (umids.reduce((a, b) => a + b, 0) / umids.length).toFixed(0) + "%" : "---";
+
+      resumo.textContent = `${total} registro(s) · Temp. média: ${mediaTemp} · Umidade média: ${mediaUmid}`;
+      info.textContent = `Página ${relatorioPagina} de ${totalPaginas}`;
+      btnAnterior.disabled = relatorioPagina <= 1;
+      btnProxima.disabled = relatorioPagina >= totalPaginas;
+    }
+
+    function paraInputDate(data) {
+      const ano = data.getFullYear();
+      const mes = String(data.getMonth() + 1).padStart(2, "0");
+      const dia = String(data.getDate()).padStart(2, "0");
+      return `${ano}-${mes}-${dia}`;
+    }
+
+    /* ============================================================
+       INICIALIZAÇÃO
+       ============================================================ */
+    document.addEventListener("DOMContentLoaded", () => {
+      aplicarTema(localStorage.getItem(CHAVE_TEMA) || "default");
+
+      const hoje = new Date();
+      const seteDiasAtras = new Date();
+      seteDiasAtras.setDate(hoje.getDate() - 7);
+      document.getElementById("relatorio-fim").value = paraInputDate(hoje);
+      document.getElementById("relatorio-inicio").value = paraInputDate(seteDiasAtras);
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          fecharModal("modal-layout");
+          fecharModal("modal-logout");
+          fecharModal("modal-senha");
+          fecharModal("modal-cadastro");
+        }
+      });
+
+      iniciarFluxoAuth();
+    });
+  </script>
+</body>
+
+</html>

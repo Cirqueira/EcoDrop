@@ -1,6 +1,18 @@
-# Ignorar todos os arquivos .html
-*.html
+# Credenciais locais (Wi-Fi / Firebase) - nunca versionar
+src/transmissor_sensor/arduino_secrets.h
+src/receptor_atuador/arduino_secrets.h
 
-# Ignorar a pasta chamada backup e todo o seu conteúdo
-src\receptor_atuador\backup
-src\transmissor_sensor\backup
+# Firebase CLI
+.firebase/
+
+# Versoes antigas / backups
+backup/
+src/receptor_atuador/backup/
+src/transmissor_sensor/backup/
+
+# Sistema operacional / editores
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
