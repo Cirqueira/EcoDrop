@@ -109,10 +109,13 @@ EcoDrop/
 ## 📷 Demonstração
 
 <p align="center">
-  <img src="src/img/Dashboard_01.jpg" width="45%" alt="Dashboard EcoDrop 01">
-  <img src="src/img/Dashboard_02.jpg" width="45%" alt="Dashboard EcoDrop 02">
-  <img src="src/img/Dashboard_03.jpg" width="45%" alt="Dashboard EcoDrop 03">
-  <img src="src/img/Dashboard_04.jpg" width="45%" alt="Dashboard EcoDrop 04">
+  <img src="src/img/ecdodrop_01.jpg" width="45%" alt="Dashboard EcoDrop 01">
+  <img src="src/img/ecodrop_02.jpg" width="45%" alt="Dashboard EcoDrop 02">
+  <img src="src/img/ecodrop_03.jpg" width="45%" alt="Dashboard EcoDrop 03">
+  <img src="src/img/ecodrop_04.jpg" width="45%" alt="Dashboard EcoDrop 04">
+  <img src="src/img/ecodrop_05.jpg" width="45%" alt="Dashboard EcoDrop 05">
+  <img src="src/img/ecodrop_06.jpg" width="45%" alt="Dashboard EcoDrop 06">
+  <img src="src/img/ecodrop_07.jpg" width="45%" alt="Dashboard EcoDrop 07">
 </p>
 
 <p align="center">
@@ -121,7 +124,8 @@ EcoDrop/
 </p>
 
 <p align="center">
-  <img src="src/img/Maquete.jpeg" width="45%" alt="Maquete do projeto">
+  <img src="src/img/Dashboard.mp4" width="45%" alt="Dashboard">
+  <img src="src/img/Maquete.mp4" width="45%" alt="Maquete">
 </p>
 
 ---
